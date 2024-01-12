@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Character Set and Responsive Viewport -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Page Title -->
+    <title>Your Page Title</title>
+
+    <!-- Default Stylesheet (You can replace or add more stylesheets) -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- HTMX Script for interactive features -->
+    <script src="https://unpkg.com/htmx.org@1.4.0/dist/htmx.min.js"></script>
+
+    <!-- Add custom scripts and stylesheets here -->
+    <!-- Example: <link rel="stylesheet" href="your-custom-style.css"> -->
+    <!-- Example: <script src="your-custom-script.js"></script> -->
+</head>
+<body>
+    <!-- Search Form -->
+    <div id="search-container">
+        <form hx-post="your-search-endpoint" hx-target="#search-results" hx-trigger="submit">
+            <input type="text" name="searchQuery" placeholder="Enter your search...">
+            <button type="submit">Search</button>
+        </form>
+    </div>
+
+    <!-- Container for Search Results -->
+    <div id="search-results">
+        <!-- Search results will be loaded here -->
+    </div>
+
+    <!-- Other body content goes here -->
+</body>
+
+</html>
