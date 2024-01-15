@@ -17,7 +17,7 @@ app.add_middleware(
     allow_origins=origins,
 )
 
-
+# Generator function to handle the lifecycle of a SQLAlchemy database session.
 def get_db():
     db = SessionLocal()
     try:

@@ -1,3 +1,4 @@
+# Importing SQLAlchemy components for ORM (Object-Relational Mapping) setup.
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlchemy.ext.declarative import declarative_base
