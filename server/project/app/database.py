@@ -1,12 +1,12 @@
-# Importing SQLAlchemy components for ORM (Object-Relational Mapping) setup.
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from sqlchemy.ext.declarative import declarative_base
+from sqlalchemy.ext.declarative import declarative_base
 
-URL_DATABASE = 'sqlite:///./finance.db'
 
-engine = create_engine(URL_DATABASE, connect_args={"check_same_thread": False})
+URL_DATABASE = 'postgresql://postgres:plmoknijbuhvuhhu123@localhost/bsfind_db'
+engine = create_engine(URL_DATABASE)
 
-SessionLocal = sessionmaker(autocommit = False, autoflush=False, bind=engine)
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 Base = declarative_base()
+
