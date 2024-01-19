@@ -12,7 +12,11 @@ class Player(Base):
     win_rate = Column(Float)
     games_won = Column(Integer)
 
+    
     def __repr__(self):
-        return f"<Player(username='{self.username}', trophies={self.trophies}, 
-        favorite_brawler='{self.favorite_brawler}', is_looking_for_clan={self.is_looking_for_clan}, 
-        win_rate={self.win_rate}, games_won={self.games_won})>"
+        return (f"<Player(username='{self.username}', trophies={self.trophies}, "
+                f"favorite_brawler='{self.favorite_brawler}', is_looking_for_clan={self.is_looking_for_clan}, "
+                f"win_rate={self.win_rate}, games_won={self.games_won})>")
+
+    
+  

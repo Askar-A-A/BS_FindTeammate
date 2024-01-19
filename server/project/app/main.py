@@ -7,6 +7,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from .api.endpoints import router 
 
 app = FastAPI()
+
 app.include_router(router)
 # CORS settings
 origins = [
@@ -16,12 +17,11 @@ origins = [
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
 
 
 # Generator function to handle the lifecycle of a SQLAlchemy database session.
