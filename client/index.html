@@ -1,42 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Character Set and Responsive Viewport -->
+    <!-- Meta Tags, Title, and CSS Link -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <!-- Page Title -->
     <title>Your Page Title</title>
-
-    <!-- Default Stylesheet (You can replace or add more stylesheets) -->
-    <!-- <link rel="stylesheet" href="style.css"> -->
-
-    <!-- HTMX Script for interactive features -->
+    <!-- HTMX Script -->
     <script src="https://unpkg.com/htmx.org@1.4.0/dist/htmx.min.js"></script>
 </head>
 <body>
     <!-- Search Form -->
     <div id="search-container">
-        <form id="filter-form">
+        <!-- Adding hx-select to ensure the form itself is targeted for values -->
+        <form id="filter-form" hx-get="http://localhost:8000/players/filter/" hx-trigger="keyup changed delay:500ms, change" hx-select="#filter-form" hx-target="#search-results" hx-indicator="#loading">
             <!-- Username Input -->
-            <input type="text" name="username" placeholder="Username" hx-get="http://localhost:8000/players/filter-name/" hx-trigger="keyup changed delay:500ms" hx-target="#search-results" hx-indicator="#loading">
+            <input type="text" name="username" placeholder="Username">
 
             <!-- Trophies Input -->
-            <input type="number" name="trophies" placeholder="Trophies" hx-get="http://localhost:8000/players/filter-trophies/" hx-trigger="keyup changed delay:500ms" hx-target="#search-results" hx-indicator="#loading">
+            <input type="number" name="trophies" placeholder="Trophies">
 
             <!-- Favourite Brawler Input -->
-            <input type="text" name="favorite_brawler" placeholder="Favorite Brawler" hx-get="http://localhost:8000/players/filter-favorite_brawler/" hx-trigger="keyup changed delay:500ms" hx-target="#search-results" hx-indicator="#loading">
+            <input type="text" name="favorite_brawler" placeholder="Favorite Brawler">
 
             <!-- Is Looking For Clan Checkbox -->
             <label>
-                <input type="checkbox" name="is_looking_for_clan" hx-get="http://localhost:8000/players/filter-is_looking_for_clan/" hx-trigger="change" hx-target="#search-results" hx-indicator="#loading"> Is Looking For Clan
+                <input type="checkbox" name="is_looking_for_clan"> Is Looking For Clan
             </label>
 
             <!-- Win Rate Input -->
-            <input type="number" name="win_rate" placeholder="Win Rate" step="0.01" hx-get="http://localhost:8000/players/filter-win-rate/" hx-trigger="keyup changed delay:500ms" hx-target="#search-results" hx-indicator="#loading">
+            <input type="number" name="win_rate" placeholder="Win Rate" step="0.01">
 
             <!-- Games Won Input -->
-            <input type="number" name="games_won" placeholder="Games Won" hx-get="http://localhost:8000/players/filter-games-won/" hx-trigger="keyup changed delay:500ms" hx-target="#search-results" hx-indicator="#loading">
+            <input type="number" name="games_won" placeholder="Games Won">
+
+            <!-- Submit Button - optional if you want explicit submission -->
+            <button type="submit">Filter</button>
         </form>
 
         <!-- Loading Indicator -->
@@ -50,7 +48,6 @@
     <!-- HTMX Script -->
     <script src="https://unpkg.com/htmx.org"></script>
 </body>
-
 <script>
     function applyFilters(event) {
         event.preventDefault(); // Prevent the default form submission
@@ -94,5 +91,6 @@
             });
     }
 </script>
+
 
 </html>
