@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Response</title>
+</head>
+<body>
+    <h1>Filtered Players:</h1>
+    <ul>
+        {% for player in filtered_players %}
+        <li>
+            Username: {{ player.username | default('N/A', true) }}<br>
+            Trophies: {{ player.trophies | default('N/A', true) }}<br>
+            Favorite Brawler: {{ player.favorite_brawler | default('N/A', true) }}<br>
+            Looking for Clan: {{ "Yes" if player.is_looking_for_clan else "No" }}<br>
+            Win Rate: {{ player.win_rate | default('N/A', true) }}<br>
+            Games Won: {{ player.games_won | default('N/A', true) }}
+        </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

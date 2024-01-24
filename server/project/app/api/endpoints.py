@@ -1,8 +1,18 @@
-from fastapi import APIRouter
-from typing import List, Optional 
+from fastapi import APIRouter, Request
+from typing import List, Optional
 from ..models.models import Player
+from fastapi.templating import Jinja2Templates
+from fastapi.responses import HTMLResponse
+import os
+
+
+
+templates = Jinja2Templates(directory="project/app/templates")
+
+
 
 router = APIRouter()
+
 
 # Artificial data for testing purposes
 PlayersDB: List[Player] = [
@@ -73,24 +83,29 @@ PlayersDB: List[Player] = [
 ]
 
 
-@router.get("/players/filter/")
-def filter_players(username: Optional[str] = None, 
-                   trophies: Optional[int] = None, 
-                   favorite_brawler: Optional[str] = None, 
-                   is_looking_for_clan: Optional[bool] = None, 
-                   win_rate: Optional[float] = None, 
-                   games_won: Optional[int] = None):
-    
+
+@router.get("/players/filter/", response_class=HTMLResponse)
+async def filter_players(request: Request,
+                         username: Optional[str] = None, 
+                         trophies: Optional[int] = None, 
+                         favorite_brawler: Optional[str] = None, 
+                         is_looking_for_clan: Optional[str] = None,  # Change to str
+                         win_rate: Optional[float] = None, 
+                         games_won: Optional[int] = None):
+
+    # Interpret the checkbox string as a boolean
+    is_looking_for_clan_bool = is_looking_for_clan == "on" if is_looking_for_clan else False
+
     filtered_players = [player for player in PlayersDB if 
                         (username is None or player.username == username) and
                         (trophies is None or player.trophies >= trophies) and
                         (favorite_brawler is None or player.favorite_brawler == favorite_brawler) and
-                        (is_looking_for_clan is None or player.is_looking_for_clan == is_looking_for_clan) and
+                        (is_looking_for_clan is None or player.is_looking_for_clan == is_looking_for_clan_bool) and
                         (win_rate is None or player.win_rate >= win_rate) and
                         (games_won is None or player.games_won >= games_won)]
+    context = {"request": request, "filtered_players": filtered_players}
     
-    return filtered_players
-
+    return templates.TemplateResponse("content.html", context)
 
 
 #The endpoint for finding a person by their nickname.
