@@ -1,13 +1,14 @@
 from pydantic import BaseModel
+from typing import Optional
 
 
 class PlayerBase(BaseModel):
-    username: str
-    trophies: int
-    favorite_brawler: str
-    is_looking_for_clan: bool
-    win_rate: float
-    games_won: int
+    username: Optional[str] = None
+    trophies: Optional[int] = None
+    favorite_brawler: Optional[str] = None
+    is_looking_for_clan: Optional[bool] = None
+    win_rate: Optional[float] = None
+    games_won: Optional[int] = None
 
     class Config:
         orm_mode = True

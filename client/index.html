@@ -1,17 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Meta Tags, Title, and CSS Link -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Page Title</title>
+    <title>Brawl Stars Player Filter</title>
     <!-- HTMX Script -->
     <script src="https://unpkg.com/htmx.org@1.4.0/dist/htmx.min.js"></script>
 </head>
 <body>
     <!-- Search Form -->
     <div id="search-container">
-        <form id="filter-form" hx-get="http://localhost:8000/players/filter/" hx-trigger="keyup changed delay:500ms, change" hx-select="#filter-form" hx-target="#search-results" hx-indicator="#loading" hx-swap="outerHTML">
+        <form id="filter-form" hx-get="http://localhost:8000/players/filter/" hx-trigger="submit" hx-target="#search-results" hx-indicator="#loading">
             <!-- Username Input -->
             <input type="text" name="username" placeholder="Username">
 
@@ -32,7 +31,7 @@
             <!-- Games Won Input -->
             <input type="number" name="games_won" placeholder="Games Won">
 
-            <!-- Submit Button - optional if you want explicit submission -->
+            <!-- Submit Button -->
             <button type="submit">Filter</button>
         </form>
 
@@ -44,7 +43,5 @@
             <!-- Filtered Players will be displayed here -->
         </div>
     </div>
-    <!-- HTMX Script -->
-    <script src="https://unpkg.com/htmx.org"></script>
 </body>
 </html>
