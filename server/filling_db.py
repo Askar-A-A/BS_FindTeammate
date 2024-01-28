@@ -1,18 +1,17 @@
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
-from models import Base, Player  # Import your Base and Player model
+import psycopg2
 import random
 
-# Database connection string
-DATABASE_URL = "postgresql://username:password@localhost/dbname"
 
-engine = create_engine(DATABASE_URL)
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+dbname = "bsfind_db"
+user = "postgres"
+password = "plmoknijbuhvuhhu123"
+host = "localhost"  
 
-# Create tables (if they don't exist)
-Base.metadata.create_all(bind=engine)
 
-# Function to generate random players data
+conn = psycopg2.connect(dbname=dbname, user=user, password=password, host=host)
+cur = conn.cursor()
+
+
 def generate_players_data(n):
     brawlers = ["Kit", "Pearl", "Charlie", "Maisie", "Mandy", "Sam", "Chuck",
                 "Lola", "Ash", "Doug", "Colette", "Belle", "Willow", "Spike",
@@ -25,30 +24,26 @@ def generate_players_data(n):
                 "Frank", "Bea", "Lou", "Darryl", "8-Bit", "Bo", "Emz",
                 "Dynamike", "Rosa", "Bull", "Barley", "Surge", "Brock",
                 "Colt", "Jacky", "Poco", "El Primo", "Jessie", "Nita",
-                "Larry & Lawrie", "Shelly"]
+                "Larry & Lawrie", "Shelly"]  # Add all brawlers here
+    for i in range(1, n + 1):
+        username = f"user{i}"
+        trophies = random.randint(0, 65000)
+        favorite_brawler = random.choice(brawlers)
+        is_looking_for_clan = random.choice([True, False])
+        win_rate = round(random.uniform(0, 1), 2)
+        games_won = random.randint(0, 100000)
 
-    for _ in range(n):
-        yield Player(
-            username=f"user{random.randint(1000, 9999)}",
-            trophies=random.randint(0, 10000),
-            favorite_brawler=random.choice(brawlers),
-            is_looking_for_clan=random.choice([True, False]),
-            win_rate=round(random.uniform(0, 1), 2),
-            games_won=random.randint(0, 500)
-        )
+        yield (username, trophies, favorite_brawler, is_looking_for_clan, win_rate, games_won)
 
-def populate_db():
-    db = SessionLocal()
-    try:
-        players = list(generate_players_data(100))  # Generate 100 random players
-        db.add_all(players)
-        db.commit()
-    except Exception as e:
-        print(f"An error occurred: {e}")
-        db.rollback()
-    finally:
-        db.close()
 
-if __name__ == "__main__":
-    populate_db()
-    print("Database populated with random players data.")
+try:
+    cur.executemany("INSERT INTO players (username, trophies, favorite_brawler, is_looking_for_clan, win_rate, games_won) VALUES (%s, %s, %s, %s, %s, %s)", list(generate_players_data(10000)))
+    conn.commit()
+except Exception as e:
+    print(f"An error occurred: {e}")
+    conn.rollback()
+finally:
+    cur.close()
+    conn.close()
+
+print("Database populated with random players data.")

@@ -1,18 +1,16 @@
-from fastapi import FastAPI, HTTPException, Depends
-from typing import Annotated
-from sqlalchemy.orm import Session
-from pydantic import BaseModel
-from .database import SessionLocal, engine, Base
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+
 from .api.endpoints import router 
+from .database import engine, Base
+
 
 app = FastAPI()
-
 app.include_router(router)
+
 # CORS settings
 origins = [
-    "http://localhost:5500",  # Frontend server (Live Server)
-    # "http://localhost:3000",  
+    "http://localhost:5500",  
 ]
 
 app.add_middleware(
@@ -24,16 +22,5 @@ app.add_middleware(
 )
 
 
-# Generator function to handle the lifecycle of a SQLAlchemy database session.
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
-
-db_dependency = Annotated[Session, Depends(get_db)]
-
 # Initialize the database tables
 Base.metadata.create_all(bind=engine)
-
