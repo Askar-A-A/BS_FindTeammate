@@ -1,5 +1,6 @@
 from typing import Optional
-from pydantic import BaseModel
+from pydantic import BaseModel, EmailStr, constr
+from datetime import datetime
 
 
 class PlayerBase(BaseModel):
@@ -16,3 +17,22 @@ class PlayerBase(BaseModel):
 
 class PlayerOut(PlayerBase):
     id: int
+    
+    
+
+
+class UserBase(BaseModel):
+    username: Optional[str] = None
+    email: Optional[EmailStr] = None
+    is_verified: Optional[bool] = None
+    join_date: Optional[datetime] = None
+
+
+class UserIn(BaseModel):
+    username: constr(min_length=3, max_length=20)
+    email: EmailStr
+    password: constr(min_length=6)
+
+
+class UserOut(UserBase):
+    id: int    

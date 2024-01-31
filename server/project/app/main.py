@@ -2,11 +2,13 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from .api.endpoints import router 
+from .authentication.auth import router as authrouter
 from .database import engine, Base
 
 
 app = FastAPI()
 app.include_router(router)
+app.include_router(authrouter, prefix="/auth", tags=["auth"])
 
 # CORS settings
 origins = [
