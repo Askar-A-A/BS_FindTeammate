@@ -6,7 +6,6 @@ from .hashing import *
 from ..database import get_db
 from ..models.models import User
 
-
 router = APIRouter()
 
 @router.post("/register", response_model=UserOut, status_code=status.HTTP_201_CREATED)
@@ -19,9 +18,11 @@ async def register_user(user: UserIn, db: Session = Depends(get_db)):
     new_user = User(
         username=user.username,
         email=user.email,
-        hashed_password=hashed_password,
+        password=hashed_password,
     )
     db.add(new_user)
     db.commit()
     db.refresh(new_user)
     return new_user
+
+

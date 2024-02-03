@@ -5,6 +5,7 @@ from fastapi import Depends
 from typing import Annotated
 
 URL_DATABASE = 'postgresql://postgres:plmoknijbuhvuhhu123@localhost/bsfind_db'
+
 engine = create_engine(URL_DATABASE)
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)

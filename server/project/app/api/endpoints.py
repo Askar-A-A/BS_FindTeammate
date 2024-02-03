@@ -2,7 +2,6 @@ from sqlalchemy.orm import Session
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from fastapi import APIRouter, Request, Depends
-
 from ..models.models import Player
 from ..database import get_db
 
@@ -21,7 +20,6 @@ async def filter_players(
     games_won = None,
     db: Session = Depends(get_db)
 ):
-    
     query = db.query(Player)
     if username:
         query = query.filter(Player.username == username)

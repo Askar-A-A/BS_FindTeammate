@@ -18,11 +18,11 @@ class Player(Base):
         return f"<Player(username='{self.username}', trophies={self.trophies}, " + \
                 f"favorite_brawler='{self.favorite_brawler}', is_looking_for_clan={self.is_looking_for_clan}, " + \
                 f"win_rate={self.win_rate}, games_won={self.games_won})>"
-
+                
 
 
 class User(Base):
-    __tablename__ = 'user'  # Define your table name here
+    __tablename__ = 'user' 
 
     id = Column(Integer, primary_key=True, index=True)
     username = Column(String(20), nullable=False, unique=True)
@@ -30,3 +30,4 @@ class User(Base):
     password = Column(String(100), nullable=False)
     is_verified = Column(Boolean, default=False)
     join_date = Column(DateTime, default=datetime.utcnow)
+    

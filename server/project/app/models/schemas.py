@@ -19,8 +19,6 @@ class PlayerOut(PlayerBase):
     id: int
     
     
-
-
 class UserBase(BaseModel):
     username: Optional[str] = None
     email: Optional[EmailStr] = None
