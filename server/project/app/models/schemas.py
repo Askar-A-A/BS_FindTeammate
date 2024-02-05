@@ -27,9 +27,9 @@ class UserBase(BaseModel):
 
 
 class UserIn(BaseModel):
-    username: constr(min_length=3, max_length=20)
+    username: constr(min_length=1, max_length=200)
     email: EmailStr
-    password: constr(min_length=6)
+    password: constr(min_length=8)
 
 
 class UserOut(UserBase):

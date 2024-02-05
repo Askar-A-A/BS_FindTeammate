@@ -8,6 +8,9 @@
     <script src="https://unpkg.com/htmx.org@1.4.0/dist/htmx.min.js"></script>
 </head>
 <body>
+    <div id="login-link">
+        <a href="login.html">Login</a>
+    </div>
     <!-- Search Form -->
     <div id="search-container">
         <form id="filter-form" hx-get="http://localhost:8000/players/filter/" hx-trigger="submit" hx-target="#search-results" hx-indicator="#loading">

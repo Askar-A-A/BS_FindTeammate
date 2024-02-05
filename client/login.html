@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <!-- HTMX Script -->
+    <script src="https://unpkg.com/htmx.org@1.4.0/dist/htmx.min.js"></script>
+</head>
+<body>
+    <!-- Registration Form -->
+    <div id="login-container">
+        <form id="login-form" hx-post="http://localhost:8000/auth/register/" hx-trigger="submit" hx-target="#login-response" hx-indicator="#loading">
+            <!-- Username Input -->
+            <input type="text" name="username" placeholder="Username" required>
+            
+            <!-- Email Input -->
+            <input type="email" name="email" placeholder="Email" required>
+            
+            <!-- Password Input -->
+            <input type="password" name="password" placeholder="Password" required>
+            
+            <!-- Submit Button -->
+            <button type="submit">Register</button> <!-- Updated button text to reflect action -->
+        </form>
+
+        <!-- Loading Indicator -->
+        <div id="loading" style="display:none;">Loading...</div>
+
+        <!-- Login Response -->
+        <div id="login-response">
+            <!-- Registration feedback will be displayed here -->
+        </div>
+    </div>
+</body>
+</html>
