@@ -8,8 +8,15 @@
     <script src="https://unpkg.com/htmx.org@1.4.0/dist/htmx.min.js"></script>
 </head>
 <body>
+    <div id="signup-link">
+        <a href="signup.html">Sign Up</a>
+    </div>
     <div id="login-link">
         <a href="login.html">Login</a>
+    </div>
+    <!-- Profile Button (conditionally displayed for logged-in users) -->
+    <div id="profile-container" style="margin-top: 20px;">
+        <a href="create-profile.html" class="profile-button">Create Profile</a>
     </div>
     <!-- Search Form -->
     <div id="search-container">
@@ -46,5 +53,13 @@
             <!-- Filtered Players will be displayed here -->
         </div>
     </div>
+    <script>
+        // Example JavaScript to conditionally display the profile button
+        // This should be replaced with actual logic to check user's authentication status
+        const isLoggedIn = true; // This should be dynamically set based on the user's auth status
+        if (!isLoggedIn) {
+            document.getElementById('profile-container').style.display = 'none';
+        }
+    </script>
 </body>
 </html>

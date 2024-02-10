@@ -19,10 +19,10 @@ class Player(Base):
                 f"favorite_brawler='{self.favorite_brawler}', is_looking_for_clan={self.is_looking_for_clan}, " + \
                 f"win_rate={self.win_rate}, games_won={self.games_won})>"
                 
-
+ 
 
 class User(Base):
-    __tablename__ = 'user' 
+    __tablename__ = 'users' 
 
     id = Column(Integer, primary_key=True, index=True)
     username = Column(String(20), nullable=False, unique=True)
@@ -31,3 +31,17 @@ class User(Base):
     is_verified = Column(Boolean, default=False)
     join_date = Column(DateTime, default=datetime.utcnow)
     
+    
+    
+class Profile(Base):
+    __tablename__ = 'profiles'
+    
+    id = Column(Integer, primary_key=True, index=True)
+    profile_picture_url = Column(String, nullable=True)  
+    
+    favorite_brawlers = Column(String, nullable=True)
+    is_looking_for_clan = Column(String, nullable=True)
+    minigames_preference = Column(String, nullable=True)
+    is_ranking_up = Column(String, nullable=True)
+    gender = Column(String, nullable=True)
+    is_lookin_for_relationship = Column(String, nullable=True)

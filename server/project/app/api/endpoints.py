@@ -40,6 +40,7 @@ async def filter_players(
 
 
 
+
 #my old endpoints 
 
 # @router.get("/players/filter-name/")
@@ -145,12 +146,6 @@ async def filter_players(
 #         games_won=702
 # )
 # ]
-
-
-
-
-
-
 
 
 

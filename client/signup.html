@@ -8,17 +8,20 @@
     <script src="https://unpkg.com/htmx.org@1.4.0/dist/htmx.min.js"></script>
 </head>
 <body>
-    <!-- Login Form -->
+    <!-- Registration Form -->
     <div id="login-container">
-        <form id="login-form" hx-post="http://localhost:8000/auth/login/" hx-trigger="submit" hx-target="#login-response" hx-indicator="#loading">
+        <form id="login-form" hx-post="http://localhost:8000/auth/signup/" hx-trigger="submit" hx-target="#login-response" hx-indicator="#loading">
             <!-- Username Input -->
             <input type="text" name="username" placeholder="Username" required>
+            
+            <!-- Email Input -->
+            <input type="email" name="email" placeholder="Email" required>
             
             <!-- Password Input -->
             <input type="password" name="password" placeholder="Password" required>
             
             <!-- Submit Button -->
-            <button type="submit">Log In</button>
+            <button type="submit">Sign Up</button> <!-- Updated button text to reflect action -->
         </form>
 
         <!-- Loading Indicator -->
@@ -26,13 +29,8 @@
 
         <!-- Login Response -->
         <div id="login-response">
-            <!-- Login feedback will be displayed here -->
+            <!-- Registration feedback will be displayed here -->
         </div>
-    </div>
-
-    <!-- Link to Sign Up page -->
-    <div id="signup-link" style="margin-top: 20px;">
-        <p>Don't have an account? <a href="signup.html">Sign Up</a></p>
     </div>
 </body>
 </html>
