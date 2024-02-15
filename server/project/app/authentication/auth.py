@@ -5,6 +5,7 @@ from ..database import get_db
 from .hashing import get_hashed_password 
 from ..models.schemas import UserOut  
 from .hashing import verify_password
+from fastapi.responses import JSONResponse
 
 router = APIRouter()
 
@@ -24,7 +25,10 @@ async def register_user(
     db.add(new_user)
     db.commit()
     db.refresh(new_user)
-    return new_user
+    # Redirect to the main page (or any other page) after successful registration
+    response = JSONResponse(content={"message": "Registration successful"},
+                            headers={"HX-Redirect": "http://127.0.0.1:5500/client/index.html"})
+    return response
 
 
 @router.post("/login")
@@ -32,5 +36,6 @@ async def login(username: str = Form(...), password: str = Form(...), db: Sessio
     user = db.query(User).filter(User.username == username).first()
     if not user or not verify_password(password, user.password):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Incorrect username or password")
-    return {"message": "Login successful", "username": user.username}
+    response = JSONResponse(content={"message": "Login successful", "username": user.username}, headers={"HX-Redirect": "http://127.0.0.1:5500/client/index.html"})
+    return response
 
