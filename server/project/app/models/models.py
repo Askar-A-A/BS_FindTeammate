@@ -23,7 +23,7 @@ class Player(Base):
 
 class User(Base):
     __tablename__ = 'users' 
-
+    
     id = Column(Integer, primary_key=True, index=True)
     username = Column(String(20), nullable=False, unique=True)
     email = Column(String(200), nullable=False, unique=True)
@@ -31,6 +31,16 @@ class User(Base):
     is_verified = Column(Boolean, default=False)
     join_date = Column(DateTime, default=datetime.utcnow)
     
+    
+# class UserOut(Base):
+#     id: int
+#     username: str
+#     email: str
+#     is_verified: bool
+#     join_date: datetime
+
+#     class Config:
+#         orm_mode = True
     
     
 class Profile(Base):

@@ -2,7 +2,10 @@ from sqlalchemy.orm import Session
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from fastapi import APIRouter, Request, Depends
-from ..models.models import Player
+from ..models.models import *
+from ..models.schemas import *
+from ..authentication.utils import *
+from ..authentication.auth import *
 from ..database import get_db
 
 router = APIRouter()
@@ -38,6 +41,25 @@ async def filter_players(
     context = {"request": request, "filtered_players": filtered_players}
     return templates.TemplateResponse("content.html", context)
 
+
+@router.post("/profile/", response_model=ProfileOut)
+async def create_profile(
+    profile: ProfileCreate, 
+    db: Session = Depends(get_db), 
+    current_user: User = Depends(get_current_user)  # Using get_current_user for auth
+):
+    # Check if the user already has a profile
+    db_profile = db.query(Profile).filter(Profile.user_id == current_user.id).first()
+    if db_profile:
+        raise HTTPException(status_code=400, detail="Profile already exists for this user")
+    
+    # Create a new profile instance
+    new_profile = Profile(**profile.dict(), user_id=current_user.id)
+    db.add(new_profile)
+    db.commit()
+    db.refresh(new_profile)
+    
+    return new_profile
 
 
 

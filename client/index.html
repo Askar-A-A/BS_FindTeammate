@@ -16,7 +16,7 @@
     </div>
     <!-- Profile Button (conditionally displayed for logged-in users) -->
     <div id="profile-container" style="margin-top: 20px;">
-        <a href="create-profile.html" class="profile-button">Create Profile</a>
+        <a href="profile.html" class="profile-button">Profile</a>
     </div>
     <!-- Search Form -->
     <div id="search-container">
@@ -54,12 +54,29 @@
         </div>
     </div>
     <script>
-        // Example JavaScript to conditionally display the profile button
-        // This should be replaced with actual logic to check user's authentication status
-        const isLoggedIn = true; // This should be dynamically set based on the user's auth status
+        const isLoggedIn = true; 
         if (!isLoggedIn) {
             document.getElementById('profile-container').style.display = 'none';
         }
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                const response = await fetch('/auth/check', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('userToken')}`
+                    }
+                });
+        
+                if (response.ok) {
+                    document.getElementById('profile-container').style.display = 'block';
+                } else {
+                    document.getElementById('profile-container').style.display = 'none';
+                }
+            } catch (error) {
+                console.error('Error checking authentication status:', error);
+            }
+        });    
     </script>
 </body>
 </html>
