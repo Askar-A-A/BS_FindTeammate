@@ -14,6 +14,9 @@
     <div id="login-link">
         <a href="login.html">Login</a>
     </div>
+    <div id="login-link">
+        <a href="login.html">Logout</a>
+    </div>
     <!-- Profile Button (conditionally displayed for logged-in users) -->
     <div id="profile-container" style="margin-top: 20px;">
         <a href="profile.html" class="profile-button">Profile</a>
@@ -54,29 +57,21 @@
         </div>
     </div>
     <script>
-        const isLoggedIn = true; 
-        if (!isLoggedIn) {
-            document.getElementById('profile-container').style.display = 'none';
-        }
-
-        document.addEventListener('DOMContentLoaded', async () => {
-            try {
-                const response = await fetch('/auth/check', {
-                    method: 'GET',
-                    headers: {
-                        'Authorization': `Bearer ${localStorage.getItem('userToken')}`
-                    }
-                });
-        
-                if (response.ok) {
-                    document.getElementById('profile-container').style.display = 'block';
-                } else {
-                    document.getElementById('profile-container').style.display = 'none';
-                }
-            } catch (error) {
-                console.error('Error checking authentication status:', error);
+        // Login function to be called when the user submits the login form.
+    
+        // Function to check the user's login state when the page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            const token = localStorage.getItem('userToken');
+            const profileContainer = document.getElementById('profile-container');
+    
+            if (token) {
+                // If a token is found, show the profile button
+                profileContainer.style.display = 'block';
+            } else {
+                // If no token is found, hide the profile button
+                profileContainer.style.display = 'none';
             }
-        });    
+        });
     </script>
 </body>
 </html>

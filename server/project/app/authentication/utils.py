@@ -9,8 +9,6 @@ from ..models.models import User
 from fastapi.security import OAuth2PasswordBearer
 
 
-#Authentication utils
-
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 ACCESS_TOKEN_EXPIRE_MINUTES = 30 

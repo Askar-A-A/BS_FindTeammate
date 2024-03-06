@@ -4,28 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <!-- HTMX Script -->
-    <script src="https://unpkg.com/htmx.org@1.4.0/dist/htmx.min.js"></script>
 </head>
 <body>
     <!-- Login Form -->
     <div id="login-container">
-        <form id="login-form" hx-post="http://localhost:8000/auth/login/" hx-trigger="submit" hx-target="#login-response" hx-indicator="#loading">
+        <form id="login-form">
             <!-- Username Input -->
-            <input type="text" name="username" placeholder="Username" required>
+            <input type="text" id="username" placeholder="Username" required>
             
             <!-- Password Input -->
-            <input type="password" name="password" placeholder="Password" required>
+            <input type="password" id="password" placeholder="Password" required>
             
             <!-- Submit Button -->
             <button type="submit">Log In</button>
         </form>
 
-        <!-- Loading Indicator -->
-        <div id="loading" style="display:none;">Loading...</div>
-
-        <!-- Login Response -->
-        <div id="login-response">
+        <!-- Login Response Placeholder -->
+        <div id="login-response" style="display:none;">
             <!-- Login feedback will be displayed here -->
         </div>
     </div>
@@ -34,5 +29,46 @@
     <div id="signup-link" style="margin-top: 20px;">
         <p>Don't have an account? <a href="signup.html">Sign Up</a></p>
     </div>
+
+    <script>
+        document.getElementById('login-form').addEventListener('submit', async (event) => {
+            event.preventDefault(); // Prevent the default form submission
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+        
+            // Log the username and password to the console
+            console.log("Username:", username);
+            console.log("Password:", password);
+        
+            await login(username, password); // Call your login function
+        });
+
+        async function login(username, password) {
+            try {
+                const formData = new URLSearchParams();
+                formData.append('username', username);
+                formData.append('password', password);
+                
+                const response = await fetch('http://localhost:8000/auth/login/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: formData
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    localStorage.setItem('userToken', data.access_token);
+                    window.location.href = '/profile.html'; // Redirect after successful login
+                } else {
+                    alert('Something aint right ma boi.');
+                }
+            } catch (error) {
+                console.error('Login error:', error);
+                alert('Login error: Please try again later.');
+            }
+        }
+    </script>
 </body>
 </html>

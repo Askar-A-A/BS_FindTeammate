@@ -3,26 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <title>User Profile</title>
+    <!-- Make sure to include HTMX -->
+    <script src="https://unpkg.com/htmx.org"></script>
 </head>
 <body>
     <h2>Edit Profile</h2>
-    <form id="profileForm">
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" placeholder="Username" required><br>
-
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" placeholder="Email" required><br>
-
-        <label for="bio">Bio:</label>
-        <textarea id="bio" name="bio" placeholder="Tell us about yourself..."></textarea><br>
-
-        <!-- Add more fields as needed -->
-
+    <!-- Use the hx-post attribute to specify the endpoint -->
+    <form id="profileForm" hx-post="/api/profile" hx-encType="multipart/form-data">
+        <!-- Your form fields here -->
+        
         <button type="submit">Save Changes</button>
     </form>
 
-    <script>
-        // Placeholder for JavaScript to handle form submission with Fetch API or HTMX later
-    </script>
+    <!-- Placeholder for HTMX output, e.g., a message after saving -->
+    <div id="output"></div>
 </body>
-</html>
+</html> 

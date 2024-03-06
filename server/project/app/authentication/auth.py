@@ -4,6 +4,8 @@ from sqlalchemy.orm import Session
 from ..database import get_db  
 from .utils import *
 from fastapi.responses import JSONResponse
+from fastapi.security import OAuth2PasswordRequestForm
+
 from ..models.models import User
 from ..models.schemas import *
 
@@ -12,18 +14,17 @@ from ..models.schemas import *
 router = APIRouter()
 
 @router.post("/login")
-async def login(username: str = Form(...), password: str = Form(...), db: Session = Depends(get_db)):
-    user = db.query(User).filter(User.username == username).first()
-    if not user or not verify_password(password, user.password):
-       raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Incorrect username or password")
-    
-   
-    access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
-    access_token = create_access_token(subject=user.id, expires_delta=access_token_expires)
-    
-   
-    response_content = {"access_token": access_token, "token_type": "bearer"}
-    return JSONResponse(content=response_content)
+async def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
+    user = db.query(User).filter(User.username == form_data.username).first()
+    if not user or not verify_password(form_data.password, user.password):
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Incorrect username or password")
+
+    access_token = create_access_token(subject=user.username, expires_delta=timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES))
+    return JSONResponse(content={
+        "access_token": access_token,
+        "token_type": "bearer",
+        "expires_in": int(timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES).total_seconds())
+    })
 
 
 @router.post("/signup", response_model=UserOut, status_code=status.HTTP_201_CREATED)
@@ -67,7 +68,7 @@ async def get_current_user(token: str = Depends(oauth2_scheme), db: Session = De
         raise credentials_exception
 
 
-@router.get("/auth/check")
+@router.get("/check")
 async def check_auth_status(current_user: User = Depends(get_current_user)):
     return {"authenticated": True} 
 

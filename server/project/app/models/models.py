@@ -32,16 +32,6 @@ class User(Base):
     join_date = Column(DateTime, default=datetime.utcnow)
     
     
-# class UserOut(Base):
-#     id: int
-#     username: str
-#     email: str
-#     is_verified: bool
-#     join_date: datetime
-
-#     class Config:
-#         orm_mode = True
-    
     
 class Profile(Base):
     __tablename__ = 'profiles'
@@ -55,3 +45,15 @@ class Profile(Base):
     is_ranking_up = Column(String, nullable=True)
     gender = Column(String, nullable=True)
     is_lookin_for_relationship = Column(String, nullable=True)
+    
+
+
+# class UserOut(Base):
+#     id: int
+#     username: str
+#     email: str
+#     is_verified: bool
+#     join_date: datetime
+
+#     class Config:
+#         orm_mode = True
