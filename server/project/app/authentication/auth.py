@@ -9,8 +9,6 @@ from fastapi.security import OAuth2PasswordRequestForm
 from ..models.models import User
 from ..models.schemas import *
 
-
-
 router = APIRouter()
 
 @router.post("/login")
