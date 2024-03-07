@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit your Profile</title>
+    <script src="https://unpkg.com/htmx.org"></script>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #ecf0f1;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+            box-sizing: border-box;
+        }
+        h2 {
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-size: 16px;
+        }
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        select,
+        .button-container button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+        .photo-container img {
+            display: block;
+            margin: 0 auto 20px auto;
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+        .button-container {
+            text-align: right;
+            margin-top: 20px;
+        }
+        .change-photo-btn {
+            padding: 10px 20px;
+            background-color: #3498db;
+            border: none;
+            border-radius: 4px;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .change-photo-btn:hover {
+            background-color: #2980b9;
+        }
+        .save-btn {
+            background-color: #27ae60;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .save-btn:hover {
+            background-color: #2ecc71;
+        }
+        .cancel-btn {
+            background-color: #95a5a6;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .cancel-btn:hover {
+            background-color: #bdc3c7;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Edit your Profile</h2>
+        <div class="photo-container">
+            <img src="path_to_profile_picture.jpg" alt="Profile Picture" />
+        </div>
+        <form id="profileForm" hx-post="/api/profile" hx-encType="multipart/form-data">
+            <div class="form-group">
+                <label for="profile_picture_url">Photo:</label>
+                <input type="file" id="profile_picture_url" name="profile_picture_url" style="display: none;">
+                <button type="button" class="change-photo-btn" onclick="document.getElementById('profile_picture_url').click();">
+                    Change Photo
+                </button>
+            </div>
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name">
+            </div>
+            <div class="form-group">
+                <label for="favorite_brawlers">Favorite Brawlers:</label>
+                <input type="text" id="favorite_brawlers" name="favorite_brawlers">
+            </div>
+            <div class="form-group">
+                <label for="minigames_preference">Minigames Preference:</label>
+                <select id="minigames_preference" name="minigames_preference">
+                    <option value="">Select Minigame</option>
+                    <option value="hide and seek">Hide and Seek</option>
+                    <option value="sniper">Sniper</option>
+                    <option value="tournament">Tournament</option>
+                    <option value="run from bibi">Run from Bibi</option>
+                </select>
+            </div>
+            <div class="form-group inline-checkbox">
+                <label for="is_ranking_up">Looking to Rank Up:</label>
+                <input type="checkbox" id="is_ranking_up" name="is_ranking_up">
+            </div>
+            <div class="form-group inline-checkbox">
+                <label for="is_looking_for_clan">Looking for Clan:</label>
+                <input type="checkbox" id="is_looking_for_clan" name="is_looking_for_clan">
+            </div>
+            <div class="form-group">
+                <label for="gender">Gender:</label>
+                <select id="gender" name="gender">
+                    <option value="">Select Gender</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+            <div class="button-container">
+                <button type="button" class="cancel-btn" onclick="window.history.back();">Cancel</button>
+                <button type="submit" class="save-btn">Save</button>
+            </div>
+        </form>
+    </div>
+    <div id="output"></div>
+
+    <script>
+        // Script to handle the file selection and potentially preview the image
+        document.getElementById('profile_picture_url').addEventListener('change', function(event) {
+            const [file] = event.target.files;
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.querySelector('.photo-container img').src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    </script>
+</body>
+</html>

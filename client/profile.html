@@ -1,21 +1,110 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>User Profile</title>
-    <!-- Make sure to include HTMX -->
-    <script src="https://unpkg.com/htmx.org"></script>
-</head>
 <body>
-    <h2>Edit Profile</h2>
-    <!-- Use the hx-post attribute to specify the endpoint -->
-    <form id="profileForm" hx-post="/api/profile" hx-encType="multipart/form-data">
-        <!-- Your form fields here -->
-        
-        <button type="submit">Save Changes</button>
-    </form>
-
-    <!-- Placeholder for HTMX output, e.g., a message after saving -->
-    <div id="output"></div>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+            box-sizing: border-box;
+        }
+        h2 {
+            color: #333;
+            font-size: 28px;
+            margin-bottom: 30px;
+            text-align: center;
+            font-weight: bold;
+        }
+        .photo-container img {
+            display: block;
+            margin: 0 auto 30px auto;
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 75px;
+            border: 4px solid #dee2e6;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #495057;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .form-group p {
+            font-size: 16px;
+            color: #212529;
+            background-color: #e9ecef;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 0;
+        }
+        .button-container {
+            text-align: center;
+            margin-top: 30px;
+        }
+        .save-btn {
+            padding: 10px 25px;
+            background-color: #007bff;
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: bold;
+            transition: background-color 0.2s ease-in-out;
+        }
+        .save-btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+    <div class="container">
+        <h2>Your Profile</h2>
+        <div class="photo-container">
+            <img src="path_to_profile_picture.jpg" alt="Profile Picture" />
+        </div>
+        <!-- Profile Information Display -->
+        <div class="profile-info">
+            <div class="form-group">
+                <label>Name:</label>
+                <p id="name">John Doe</p>
+            </div>
+            <div class="form-group">
+                <label>Favorite Brawlers:</label>
+                <p id="favorite_brawlers">Shelly, Colt, Bull</p>
+            </div>
+            <div class="form-group">
+                <label>Minigames Preference:</label>
+                <p id="minigames_preference">Run from Bibi</p>
+            </div>
+            <div class="form-group">
+                <label>Looking to Rank Up:</label>
+                <p id="is_ranking_up">Yes</p>
+            </div>
+            <div class="form-group">
+                <label>Looking for Clan:</label>
+                <p id="is_looking_for_clan">No</p>
+            </div>
+            <div class="form-group">
+                <label>Gender:</label>
+                <p id="gender">Male</p>
+            </div>
+        </div>
+        <div class="button-container">
+            <a href="edit_profile.html" class="save-btn">Edit Profile</a>
+        </div>
+    </div>
 </body>
-</html> 

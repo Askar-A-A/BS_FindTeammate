@@ -4,41 +4,91 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f7f7f7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        #login-container {
+            background-color: #fff;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 320px;
+        }
+        #login-form input {
+            width: 100%;
+            padding: 0.5rem;
+            margin: 0.5rem 0;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+            box-sizing: border-box;
+        }
+        #login-form button {
+            width: 100%;
+            padding: 0.5rem;
+            margin: 1rem 0;
+            border: none;
+            border-radius: 4px;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+            box-sizing: border-box;
+        }
+        #login-form button:hover {
+            background-color: #0056b3;
+        }
+        #signup-link {
+            text-align: center;
+            margin-top: 1rem;
+        }
+        #signup-link a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        #signup-link a:hover {
+            text-decoration: underline;
+        }
+        #login-response {
+            display: none; /* Hidden by default; will be shown if there is a message */
+            text-align: center;
+            color: red;
+            margin-top: 1rem;
+        }
+    </style>
 </head>
 <body>
     <!-- Login Form -->
     <div id="login-container">
         <form id="login-form">
-            <!-- Username Input -->
             <input type="text" id="username" placeholder="Username" required>
-            
-            <!-- Password Input -->
             <input type="password" id="password" placeholder="Password" required>
-            
-            <!-- Submit Button -->
             <button type="submit">Log In</button>
         </form>
 
         <!-- Login Response Placeholder -->
-        <div id="login-response" style="display:none;">
+        <div id="login-response">
             <!-- Login feedback will be displayed here -->
         </div>
+        <!-- Link to Sign Up page -->
+        <div id="signup-link">
+           <p>Don't have an account? <a href="signup.html">Sign Up</a></p>
+        </div>
+
     </div>
 
-    <!-- Link to Sign Up page -->
-    <div id="signup-link" style="margin-top: 20px;">
-        <p>Don't have an account? <a href="signup.html">Sign Up</a></p>
-    </div>
-
+    
     <script>
         document.getElementById('login-form').addEventListener('submit', async (event) => {
             event.preventDefault(); // Prevent the default form submission
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
-        
-            // Log the username and password to the console
-            console.log("Username:", username);
-            console.log("Password:", password);
         
             await login(username, password); // Call your login function
         });
@@ -62,13 +112,18 @@
                     localStorage.setItem('userToken', data.access_token);
                     window.location.href = '/profile.html'; // Redirect after successful login
                 } else {
-                    alert('Something aint right ma boi.');
+                    const loginResponseDiv = document.getElementById('login-response');
+                    loginResponseDiv.style.display = 'block';
+                    loginResponseDiv.textContent = 'Something went wrong, please try again.';
                 }
             } catch (error) {
                 console.error('Login error:', error);
-                alert('Login error: Please try again later.');
+                const loginResponseDiv = document.getElementById('login-response');
+                loginResponseDiv.style.display = 'block';
+                loginResponseDiv.textContent = 'Login error: Please try again later.';
             }
         }
     </script>
 </body>
 </html>
+

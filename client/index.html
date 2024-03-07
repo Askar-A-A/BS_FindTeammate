@@ -5,65 +5,152 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Brawl Stars Player Filter</title>
     <!-- HTMX Script -->
-    <script src="https://unpkg.com/htmx.org@1.4.0/dist/htmx.min.js"></script>
+    <script src="https://unpkg.com/htmx.org"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .auth-links a {
+            text-decoration: none;
+            color: #007bff;
+            margin: 0 10px;
+        }
+        .auth-links a:hover {
+            text-decoration: underline;
+        }
+        .form-container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+            width: 100%;
+            max-width: 500px;
+        }
+        .form-container h2 {
+            margin-top: 0;
+            color: #333;
+            text-align: center;
+        }
+        form {
+            display: grid;
+            grid-gap: 10px;
+        }
+        input, select, button {
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            outline: none;
+        }
+        button {
+            background-color: #5cb85c;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #4cae4c;
+        }
+        #loading {
+            display: none;
+            text-align: center;
+            margin-top: 10px;
+        }
+        #search-results {
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
-    <div id="signup-link">
+    <div class="auth-links" id="signup-link">
         <a href="signup.html">Sign Up</a>
-    </div>
-    <div id="login-link">
         <a href="login.html">Login</a>
-    </div>
-    <div id="login-link">
         <a href="login.html">Logout</a>
     </div>
+    
     <!-- Profile Button (conditionally displayed for logged-in users) -->
-    <div id="profile-container" style="margin-top: 20px;">
+    <div id="profile-container" style="display: none;">
         <a href="profile.html" class="profile-button">Profile</a>
     </div>
+    
     <!-- Search Form -->
-    <div id="search-container">
+    <!-- <div class="form-container" id="search-container">
+        <h2>Player Filter</h2>
         <form id="filter-form" hx-get="http://localhost:8000/players/filter/" hx-trigger="submit" hx-target="#search-results" hx-indicator="#loading">
-            <!-- Username Input -->
             <input type="text" name="username" placeholder="Username">
-
-            <!-- Trophies Input -->
             <input type="number" name="trophies" placeholder="Trophies">
-
-            <!-- Favourite Brawler Input -->
             <input type="text" name="favorite_brawler" placeholder="Favorite Brawler">
-
-            <!-- Is Looking For Clan Checkbox -->
             <label>
-                <input type="checkbox" name="is_looking_for_clan"> Is Looking For Clan
+                <input type="checkbox" name="is_looking_for_clan"> Looking For Clan
             </label>
-
-            <!-- Win Rate Input -->
             <input type="number" name="win_rate" placeholder="Win Rate" step="0.01">
-
-            <!-- Games Won Input -->
             <input type="number" name="games_won" placeholder="Games Won">
-
-            <!-- Submit Button -->
             <button type="submit">Filter</button>
         </form>
+        
+        <div id="loading">Loading...</div>
+        <div id="search-results"></div>
+    </div> -->
 
-        <!-- Loading Indicator -->
-        <div id="loading" style="display:none;">Loading...</div>
-
-        <!-- Search Results -->
-        <div id="search-results">
-            <!-- Filtered Players will be displayed here -->
+    <div class="form-container" id="search-container">
+        <h2>Player Filter</h2>
+        <form id="filter-form" hx-get="http://localhost:8000/players/filter/" hx-trigger="submit" hx-target="#search-results" hx-indicator="#loading">
+            <input type="text" name="username" placeholder="Username">
+            <input type="number" name="trophies" placeholder="Trophies">
+            <input type="text" name="favorite_brawler" placeholder="Favorite Brawler">
+            <label><input type="checkbox" name="is_looking_for_clan"> Looking For Clan</label>
+            <input type="number" name="win_rate" placeholder="Win Rate" step="0.01">
+            <input type="number" name="games_won" placeholder="Games Won">
+            <button type="submit">Filter</button>
+        </form>
+        <button id="toggle-profile-filtration" style="margin-top: 10px;">Enable Profile Filtration</button>
+        
+        <div id="profile-filtration" style="display: none;">
+            <!-- Profile-related fields here -->
+            <div class="form-group">
+                <label for="minigames_preference">Minigames Preference:</label>
+                <select id="minigames_preference" name="minigames_preference">
+                    <option value="">Select Minigame</option>
+                    <option value="hide and seek">Hide and Seek</option>
+                    <option value="sniper">Sniper</option>
+                    <option value="tournament">Tournament</option>
+                    <option value="run from bibi">Run from Bibi</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="is_ranking_up">Looking to Rank Up:</label>
+                <input type="checkbox" id="is_ranking_up" name="is_ranking_up">
+            </div>
+            <div class="form-group">
+                <label for="gender">Gender:</label>
+                <select id="gender" name="gender">
+                    <option value="">Select Gender</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="gay">Gay</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="is_looking_for_relationship">Looking for Relationship:</label>
+                <input type="checkbox" id="is_looking_for_relationship" name="is_looking_for_relationship">
+            </div>
         </div>
+        
+        <div id="loading">Loading...</div>
+        <div id="search-results"></div>
     </div>
-    <script>
-        // Login function to be called when the user submits the login form.
-    
+    <!-- <script>
         // Function to check the user's login state when the page loads
         document.addEventListener('DOMContentLoaded', () => {
             const token = localStorage.getItem('userToken');
             const profileContainer = document.getElementById('profile-container');
-    
+            
             if (token) {
                 // If a token is found, show the profile button
                 profileContainer.style.display = 'block';
@@ -71,6 +158,30 @@
                 // If no token is found, hide the profile button
                 profileContainer.style.display = 'none';
             }
+        });
+    </script> -->
+    <script>
+        // Existing script to check user's login state
+        document.addEventListener('DOMContentLoaded', () => {
+            const token = localStorage.getItem('userToken');
+            const profileContainer = document.getElementById('profile-container');
+            if (token) {
+                profileContainer.style.display = 'block';
+            } else {
+                profileContainer.style.display = 'none';
+            }
+
+            // Toggle profile filtration fields
+            document.getElementById('toggle-profile-filtration').addEventListener('click', function() {
+                const profileFiltration = document.getElementById('profile-filtration');
+                if (profileFiltration.style.display === 'none') {
+                    profileFiltration.style.display = 'block';
+                    this.textContent = 'Disable Profile Filtration';
+                } else {
+                    profileFiltration.style.display = 'none';
+                    this.textContent = 'Enable Profile Filtration';
+                }
+            });
         });
     </script>
 </body>
