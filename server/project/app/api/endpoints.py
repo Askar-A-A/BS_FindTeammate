@@ -30,7 +30,7 @@ async def filter_players(
         query = query.filter(Player.trophies >= trophies)
     if favorite_brawler:
         query = query.filter(Player.favorite_brawler == favorite_brawler)
-    if is_looking_for_clan == True:
+    if is_looking_for_clan is not None:
         query = query.filter(Player.is_looking_for_clan == is_looking_for_clan)
     if win_rate or win_rate == 0:
         query = query.filter(Player.win_rate >= win_rate)

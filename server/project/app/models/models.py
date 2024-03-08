@@ -9,7 +9,7 @@ class Player(Base):
     id = Column(Integer, primary_key=True, index=True)
     username = Column(String, unique=True, index=True)
     trophies = Column(Integer)
-    favorite_brawler = Column(String)
+    favorite_brawler = Column(Boolean)
     is_looking_for_clan = Column(Boolean, default=False)
     win_rate = Column(Float)
     games_won = Column(Integer)
