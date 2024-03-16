@@ -22,6 +22,7 @@ class PlayerOut(PlayerBase):
 class UserBase(BaseModel):
     username: Optional[str] = None
     email: Optional[EmailStr] = None
+    player_tag: Optional[str] = None
     is_verified: Optional[bool] = None
     join_date: Optional[datetime] = None
 
@@ -29,6 +30,7 @@ class UserBase(BaseModel):
 class UserIn(BaseModel):
     username: constr(min_length=1, max_length=200)
     email: EmailStr
+    player_tag: constr(min_length=8)
     password: constr(min_length=8)
 
 
